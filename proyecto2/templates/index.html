@@ -1,0 +1,107 @@
+<html>
+<head>
+    <title>Red Neuronal </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column; /* Cambiar la dirección del flex a columna */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            margin-bottom: 20px; /* Agregar margen en la parte inferior */
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        button {
+            background-color: #824caf;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+
+        .footer-card {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h3>Red Neuronal para Clasificación de Eficiencia</h3>
+    <p style="text-align: justify;">Esta aplicación Django utiliza una red neuronal implementada con TensorFlow para clasificar la eficiencia de ciertos datos de entrada. La red neuronal consta de 4 neuronas y ha sido entrenada para identificar si la eficiencia es alta o baja basándose en los patrones de los datos proporcionados. Los resultados se presentan en forma de tabla, donde cada entrada se etiqueta como 'Eficiencia Alta' o 'Eficiencia Baja' junto con un valor numérico que representa el grado de eficiencia calculado por el modelo.</p>
+</div>
+
+<div class="card">
+    <p style="text-align: justify;">La eficiencia del modelo se evalúa en función del porcentaje de acierto en la clasificación de los datos de entrada. Si la eficiencia es alta, significa que el modelo ha clasificado correctamente al menos el <strong>75%</strong> de los datos de entrada. Por ejemplo, si el modelo clasifica un dato como 'Eficiencia Alta', significa que existe un <strong>75%</strong> de probabilidad de error en su clasificación. Si el modelo clasifica un dato como 'Eficiencia Baja', significa que existe un <strong>75%</strong> de probabilidad de acierto. Un modelo con una precisión del <strong>100%</strong> clasificaría todos los datos de manera correcta, pero en la práctica, un modelo con una precisión del <strong>75%</strong> o superior se considera decente.</p>
+
+
+
+    <form action="/prediccion/" method="post">
+        {% csrf_token %}
+        <div class="button-container">
+            <button type="submit">Correr Modelo</button>
+        </div>
+    </form>
+
+    <div style="display: flex; justify-content: center;">
+        <table style="border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid black;">
+                    <th style="border-right: 2px solid black; border-top: 2px solid black; border-left: 2px solid black;">Neurona</th>
+                    <th style="border-right: 2px solid black; border-top: 2px solid black;">Predicción</th>
+                    <th style="border-top: 2px solid black; border-right: 2px solid black;">Eficiencia</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+            {% for fila in predicciones %}
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ forloop.counter }}</td>
+                    {% if fila >= 0.2500 %}
+                        <td style="border: 1px solid black; color: rgb(0, 255, 21); text-align: center;"><strong>Eficiencia alta</strong></td>
+                    {% elif fila <= 0.5000 %}
+                        <td style="border: 1px solid black; color: red; text-align: center;"><strong>Eficiencia baja</strong></td>
+                    {% endif %}
+                    <td style="border: 1px solid black; text-align: center;">{{ fila|floatformat:"2" }}</td> <!-- Muestra el número con dos decimales -->
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+</div>
+
+<div class="footer-card card"> <!-- Agregado clase footer-card para mantener el estilo -->
+    <h3>Integrantes:</h3>
+    <p>Marlon Vásquez</p>
+    <p>Sergio Guerra</p>
+    <p>Juan Roa</p>
+</div>
+</body>
+</html>
