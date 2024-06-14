@@ -2,7 +2,7 @@
 
 Plantilla Django para implementación de modelos de Deep Learning
 
-Autor: José M. Llanos M.
+Autor: Marlon Vasquez
 Fecha: 12-junio-2024
 
 
